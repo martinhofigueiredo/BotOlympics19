@@ -4,7 +4,7 @@
 int incomingByte;
 BotFCTUC arlindo = BotFCTUC();
 uint16_t RGBC[3];
-uint16_t Distance[3];
+int16_t Distance[3];
 int16_t IR;
 
 
