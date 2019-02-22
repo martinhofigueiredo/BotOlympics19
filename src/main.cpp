@@ -15,15 +15,11 @@ void setup() {
 }
 
 void loop() {
-  //arlindo.GetSonars(Distance);
-  IR = arlindo.GetIR();
-  /*Serial.print("Esquerda = ");
+  arlindo.GetSonars(Distance);
+  Serial.print("Esquerda = ");
   Serial.println(Distance[0]);
   Serial.print("Centro = ");
   Serial.println(Distance[1]);
   Serial.print("Direita = ");
-  Serial.println(Distance[2]);*/
-  Serial.print("IR = ");
-  Serial.println(IR);
-
+  Serial.println(Distance[2]);
 }
