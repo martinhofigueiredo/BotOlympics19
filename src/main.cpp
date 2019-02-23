@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <BotFCTUC.h>
 
+
 int incomingByte;
 BotFCTUC arlindo = BotFCTUC();
 uint16_t RGBC[3];
@@ -8,8 +9,13 @@ int16_t Distance[3];
 int16_t IR;
 
 void linetest(){
-  int i = 0;
-  int r, g, b;
+  arlindo.GetColor(RGBC);
+  Serial.print("R = ");
+  Serial.println(RGBC[0]);
+  Serial.print("R = ");
+  Serial.println(RGBC[0]);
+  Serial.print("R = ");
+  Serial.println(RGBC[0]);
 }
 
 void setup() {
