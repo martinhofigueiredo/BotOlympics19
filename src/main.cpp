@@ -9,10 +9,6 @@
 #define MAXRANGE 100;
 #define K 1.5
 
-
-//#define TEST
-
-
 #define TrashHole 67
 
 int incomingByte;
@@ -73,20 +69,6 @@ void flame_test()
       }
 }
 
-void setup() {
-  arlindo.begin();
-  Serial.begin(9600);
-}
-
-void setup(){
-  Serial.begin(57600);
-  arlindo.begin();
-  //Setpoint=(double)THRESHOLD;
-  //myPID.SetMode(AUTOMATIC);
-  //#ifdef !defined(TEST)
-  while(!arlindo.ButtonPressed()){}
-}
-
 bool linetest(){
   arlindo.GetColor(RGBC);
   #ifdef TEST
@@ -108,16 +90,18 @@ bool linetest(){
     return true;
   }
   #endif
-
-
 }
 
-void setup() {
 
+void setup(){
   Serial.begin(57600);
   arlindo.begin();
-  Serial.print("EstouVivo");
+  //Setpoint=(double)THRESHOLD;
+  //myPID.SetMode(AUTOMATIC);
+  //#ifdef !defined(TEST)
+  while(!arlindo.ButtonPressed()){}
 }
+
 
 void loop() {
   navigate();
