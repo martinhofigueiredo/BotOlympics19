@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include <BotFCTUC.h>
-#include <PID_v1.h>
+#include <PID_Autotune_V0.h>
 
 #define TEST
 #define THRESHOLD 10
@@ -13,7 +13,7 @@ uint16_t RGBC[3];
 int16_t Distance[3];
 int16_t IR;
 int16_t Motor[2];
-double Setpoint, Input, Output, consKp=10, consKi=5, consKd=5;
+double Setpoint, Input, Output, consKp=101, consKi=0.003, consKd=0.2;
 PID myPID(&Input, &Output, &Setpoint, consKp, consKi, consKd, DIRECT);
 
 
@@ -29,16 +29,11 @@ void navigate(){
     if(Distance[0]>Distance[2]){
       Motor[0] = DEFAULTSPEED*-1*K;
       Motor[1] = DEFAULTSPEED*K;
-      Motor[0] = DEFAULTSPEED;
-      Motor[1] = DEFAULTSPEED;
-      delay(500);
+
     }
     else{
       Motor[0] = DEFAULTSPEED*K;
       Motor[1] = DEFAULTSPEED*-1*K;
-      Motor[0] = DEFAULTSPEED;
-      Motor[1] = DEFAULTSPEED;
-      delay(500);
     }
   }
   else{
