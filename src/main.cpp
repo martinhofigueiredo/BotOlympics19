@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <BotFCTUC.h>
+#include <PID_v1.h>
 #include <PID_Autotune_V0.h>
 
 #define TEST
