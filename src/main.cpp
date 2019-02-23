@@ -107,11 +107,14 @@ bool linetest(){
 }
 
 void setup() {
-  Serial.begin(9600);
+
+  Serial.begin(57600);
   arlindo.begin();
+  Serial.print("EstouVivo");
 }
 
 void loop() {
   navigate();
   linetest();
+
 }
