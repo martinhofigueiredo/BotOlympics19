@@ -4,8 +4,8 @@
 #include <PID_Autotune_V0.h>
 
 //#define TEST
-#define THRESHOLD 10
-#define DEFAULTSPEED 60
+#define THRESHOLD 20
+#define DEFAULTSPEED 120
 #define MAXRANGE 100;
 #define K 1.5
 
@@ -28,25 +28,26 @@ void navigate(){
   arlindo.GetSonars(Distance);
   for(int i = 0; i < 3;i++){
     if(Distance[i]==0){
-      Distance[i] = THRESHOLD+1;
+      Distance[i] = 50;
     }
   }
-
-  if(Distance[1] < 6){
-    arlindo.Move(50,-50);
+//Serial.println(Distance[2]);
+  if(Distance[1] < 14){
+    arlindo.Move(97,-(97));
 
     }
-  else{
-    int kp=(Distance[2]-THRESHOLD)*5;
-    Serial.print("Left Motor Speed =");
+ else {
+    float ke = (Distance[2]-THRESHOLD)*3.7;
+    /*Serial.print("Left Motor Speed =");
     Serial.println(DEFAULTSPEED+kp);
     Serial.print("Right Motor Speed =");
-    Serial.println(DEFAULTSPEED-kp);
-  	arlindo.Move(DEFAULTSPEED-kp,DEFAULTSPEED+kp);
+    Serial.println(DEFAULTSPEED-kp);*/
+  	arlindo.Move(DEFAULTSPEED,DEFAULTSPEED+ke);
+    //Serial.println(DEFAULTSPEED-kp);
+  	//arlindo.Move(DEFAULTSPEED-kp,DEFAULTSPEED+kp);
 
 
   }
-
 void flame_test()
 {
   arlindo.SetIRScale(SCALE_1);
@@ -82,11 +83,9 @@ bool linetest(){
     Serial.println(RGBC[3]);
   #else
   if(RGBC[0] < 100 && RGBC[1] < 100 && RGBC[2] < 100){
-    //Serial.println("NiBBA");
     return false;
   }
   else{
-    //Serial.println("Branco");
     return true;
   }
   #endif
@@ -96,17 +95,12 @@ bool linetest(){
 void setup(){
   Serial.begin(57600);
   arlindo.begin();
-  //Setpoint=(double)THRESHOLD;
-  //myPID.SetMode(AUTOMATIC);
-  //#ifdef !defined(TEST)
   while(!arlindo.ButtonPressed()){}
 }
 
 
 void loop() {
   navigate();
-  linetest();
-  flametest();
   #ifdef TEST
   Serial.print("Esquerda =");
   Serial.println(Distance[0]);

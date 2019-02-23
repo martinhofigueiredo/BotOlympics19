@@ -1,6 +1,6 @@
 #include "BotFCTUC.h"
 
-#define PHYSICALCORRECTIONLW 0.95
+#define PHYSICALCORRECTIONLW 1.00
 #define PHYSICALCORRECTIONRW 1.05
 bool BotFCTUC::begin(void) {
 
@@ -222,7 +222,7 @@ int16_t BotFCTUC::GetSonar(uint16_t sonarTrigger, uint16_t sonarEcho) {
 #else
   uint16_t distance = pulseIn(sonarEcho, HIGH);
 #endif
-  delay(50);
+  delay(15);
 
   return (distance / 58.2);
 }
