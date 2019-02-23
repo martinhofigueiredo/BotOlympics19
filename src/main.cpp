@@ -2,7 +2,8 @@
 #include <BotFCTUC.h>
 #include <PID_v1.h>
 
-#define DTHRESHOLD 5
+#define DTHRESHOLD 50
+#define DEFAULTSPEED 50
 
 BotFCTUC arlindo = BotFCTUC();
 uint16_t RGBC[3];
@@ -13,13 +14,17 @@ PID myPID(&Input, &Output, &Setpoint, consKp, consKi, consKd, DIRECT);
 
 
 void navigate(){
+  arlindo.GetSonars(*Distance);
   if (Distance[1]>DTHRESHOLD) {
     Input = (double)Distance[2];
     myPID.Compute();
-	  arlindo.Move(x*(int16_t)Output,x/(int16_t)Output);
+    Serial.println(Output);
+    Serial.println(Distance[1]);
+    Serial.println(Distance[2]);
+	  arlindo.Move(DEFAULTSPEED*(int16_t)Output,DEFAULTSPEED/(int16_t)Output);
   }
   else if (Distance[1]<DTHRESHOLD) { //demasiado perto de merdas
-    arlindo.Move(0,50);				 //roda 90 graus
+    arlindo.Move(0,DEFAULTSPEED);				 //roda 90 graus
   }
 
 }
@@ -27,7 +32,7 @@ void navigate(){
 void setup() {
   Serial.begin(9600);
   arlindo.begin();
-  Setpoint=(double)Dthreshold;
+  Setpoint=(double)DTHRESHOLD;
   myPID.SetMode(AUTOMATIC);
 }
 
