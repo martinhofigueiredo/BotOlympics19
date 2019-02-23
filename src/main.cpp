@@ -4,7 +4,7 @@
 #include <PID_Autotune_V0.h>
 
 //#define TEST
-#define THRESHOLD 5
+#define THRESHOLD 10
 #define DEFAULTSPEED 60
 #define MAXRANGE 100;
 #define K 1.5
@@ -28,16 +28,16 @@ void navigate(){
   }
 
   if(Distance[1] < 6){
-    arlindo.Move(0,50);
+    arlindo.Move(50,-50);
 
     }
   else{
-    int kp=(Distance[2]-THRESHOLD)*10;
+    int kp=(Distance[2]-THRESHOLD)*5;
     Serial.print("Left Motor Speed =");
     Serial.println(DEFAULTSPEED+kp);
     Serial.print("Right Motor Speed =");
     Serial.println(DEFAULTSPEED-kp);
-  	arlindo.Move(DEFAULTSPEED+kp,DEFAULTSPEED-kp);
+  	arlindo.Move(DEFAULTSPEED-kp,DEFAULTSPEED+kp);
 
   }
 
