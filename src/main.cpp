@@ -10,7 +10,12 @@ uint16_t RGBC[3];
 int16_t Distance[3];
 int16_t IR;
 
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> ded48535698ad2d8cd369958fab13f5f6e49cb65
 void flame_test()
 {
   arlindo.SetIRScale(SCALE_1);
@@ -29,10 +34,18 @@ void flame_test()
       }
     else
       {
+<<<<<<< HEAD
         Serial.println(" FLAME NOT DETEC");
       }
 }
 
+=======
+        Serial.println(" FLAME NOT DETEC")
+      }
+}
+
+>>>>>>> 992bd248a5e37f0e0605dc9ac428ed901bc73afd
+>>>>>>> ded48535698ad2d8cd369958fab13f5f6e49cb65
 void setup() {
   arlindo.begin();
   Serial.begin(9600);
