@@ -1,5 +1,8 @@
 #include "BotFCTUC.h"
 
+#define PHYSICALCORRECTIONLW 0.95
+#define PHYSICALCORRECTIONRW 1.05
+
 bool BotFCTUC::begin(void) {
 
   pinMode(BUTTON_PIN, INPUT);
@@ -84,8 +87,8 @@ void BotFCTUC::MotorDirSpeed(int16_t Speed) {
 }
 
 void BotFCTUC::Move(int16_t Vel_Esq, int16_t Vel_Dir) {
-  MotorEsqSpeed(MOTOR_B_FORWARD * Vel_Esq);
-  MotorDirSpeed(MOTOR_A_FORWARD * Vel_Dir);
+  MotorEsqSpeed(MOTOR_B_FORWARD * Vel_Esq * PHYSICALCORRECTIONLW);
+  MotorDirSpeed(MOTOR_A_FORWARD * Vel_Dir * PHYSICALCORRECTIONRW);
 }
 
 void BotFCTUC::FanOn(void) {

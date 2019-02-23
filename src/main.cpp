@@ -10,7 +10,7 @@ BotFCTUC arlindo = BotFCTUC();
 uint16_t RGBC[3];
 int16_t Distance[3];
 int16_t IR;
-double Setpoint, Input, Output, consKp=0.75, consKi=0.05, consKd=0.25;
+double Setpoint, Input, Output, consKp=0.8, consKi=0.05, consKd=0.25;
 PID myPID(&Input, &Output, &Setpoint, consKp, consKi, consKd, DIRECT);
 
 
@@ -23,9 +23,9 @@ void navigate(){
   Serial.println(Distance[1]);
   Serial.print("Direita =");
   Serial.println(Distance[2]);
+  arlindo.Move(255*0.6,255*0.6);
   #else
-
-
+  if (Distance[1]==0) Distance[1]=DTHRESHOLD+2;
   if (Distance[1]>DTHRESHOLD) {
     Input = (double)Distance[2];
     myPID.Compute();
