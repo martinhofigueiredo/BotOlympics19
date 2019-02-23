@@ -26,6 +26,7 @@ void linetest(){
     Serial.print("Preto");
   }
   else{Serial.print("Branco");}
+  #endif
 
 
 }

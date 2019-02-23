@@ -10,7 +10,7 @@
 #define LED_ON                1
 
 #define SONAR_NUMBER          3
-//#define SONAR_TIMEOUT         3492 // 60cm x 58.2 cm/us
+#define SONAR_TIMEOUT         3492 // 60cm x 58.2 cm/us
 #define LEFT_SONAR_TRIGGER    11
 #define LEFT_SONAR_ECHO       12
 #define CENTER_SONAR_TRIGGER  2
@@ -28,10 +28,10 @@
 
 #define MOTOR_A_IN1           5
 #define MOTOR_A_IN2           3
-#define MOTOR_A_FORWARD       1 
+#define MOTOR_A_FORWARD       1
 #define MOTOR_B_IN1           9
 #define MOTOR_B_IN2           6
-#define MOTOR_B_FORWARD       -1 
+#define MOTOR_B_FORWARD       -1
 
 typedef enum
 {
@@ -65,7 +65,7 @@ class BotFCTUC{
   void GetSonars(uint16_t Distance[]);
   int16_t GetSonar(uint16_t sonarTrigger, uint16_t sonarEcho);
   void GetColor(uint16_t RGBC[]);
-  
+
   private:
   // Sonar pins {left, center, right}
   uint16_t _sonarEchoPins[SONAR_NUMBER] = {
