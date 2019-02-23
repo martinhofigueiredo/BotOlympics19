@@ -23,9 +23,9 @@ void linetest(){
     Serial.println(RGBC[3]);
   #else
   if(RGBC[0] < 100 && RGBC[1] < 100 && RGBC[2] < 100){
-    Serial.print("Preto");
+    Serial.println("NiBBA");
   }
-  else{Serial.print("Branco");}
+  else{Serial.println("Branco");}
   #endif
 
 
