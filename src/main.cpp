@@ -1,43 +1,45 @@
 #include <Arduino.h>
 #include <BotFCTUC.h>
 
+//#define COLOR_TEST
+
+
 int incomingByte;
 BotFCTUC arlindo = BotFCTUC();
 uint16_t RGBC[3];
 int16_t Distance[3];
 int16_t IR;
 
+bool linetest(){
+  arlindo.GetColor(RGBC);
+  #ifdef COLOR_TEST
+    Serial.print("R = ");
+    Serial.println(RGBC[0]);
+    Serial.print("G = ");
+    Serial.println(RGBC[1]);
+    Serial.print("B = ");
+    Serial.println(RGBC[2]);
+    Serial.print("C = ");
+    Serial.println(RGBC[3]);
+  #else
+  if(RGBC[0] < 100 && RGBC[1] < 100 && RGBC[2] < 100){
+    //Serial.println("NiBBA");
+    return false;
+  }
+  else{
+    //Serial.println("Branco");
+    return true;
+  }
+  #endif
+
+
+}
 
 void setup() {
   Serial.begin(9600);
+  arlindo.begin();
 }
 
 void loop() {
-  if (Serial.available() > 0) {
-      // read the oldest byte in the serial buffer:
-      incomingByte = Serial.read();
-      // if it's a capital H (ASCII 72), turn on the LED:
-      if (incomingByte == 'W') {
-        arlindo.Move(50,50);
-        Serial.print("frente\n");
-      }
-      // if it's an L (ASCII 76) turn off the LED:
-      if (incomingByte == 'A') {
-        arlindo.Move(-50,50);
-        Serial.print("esquerda\n");
-      }
-      if (incomingByte == 'S') {
-        arlindo.Move(-50,-50);
-        Serial.print("tras\n");
-      }
-      // if it's an L (ASCII 76) turn off the LED:
-      if (incomingByte == 'D') {
-        arlindo.Move(50,-50);
-        Serial.print("direita\n");
-      }
-      if (incomingByte == 'P') {
-        arlindo.Move(0,0);
-        Serial.print("parado\n");
-      }
-}
+  linetest();
 }
