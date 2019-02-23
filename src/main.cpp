@@ -10,7 +10,7 @@ uint16_t RGBC[3];
 int16_t Distance[3];
 int16_t IR;
 
-void linetest(){
+bool linetest(){
   arlindo.GetColor(RGBC);
   #ifdef COLOR_TEST
     Serial.print("R = ");
@@ -23,9 +23,13 @@ void linetest(){
     Serial.println(RGBC[3]);
   #else
   if(RGBC[0] < 100 && RGBC[1] < 100 && RGBC[2] < 100){
-    Serial.println("NiBBA");
+    //Serial.println("NiBBA");
+    return false;
   }
-  else{Serial.println("Branco");}
+  else{
+    //Serial.println("Branco");
+    return true;
+  }
   #endif
 
 
