@@ -46,7 +46,7 @@ void navigate(){
     //Serial.println(DEFAULTSPEED-kp);
   	//arlindo.Move(DEFAULTSPEED-kp,DEFAULTSPEED+kp);
 
-void flame_test()
+int flame_test()
 {
   arlindo.SetIRScale(SCALE_7);
   arlindo.GetSonars(Distance);
@@ -62,15 +62,18 @@ void flame_test()
       {
         Serial.println(" FLAME DETEC FAR");
         //arlindo.FanOn();
+        return 1;
       }
       if(IR > TrashHole && Distance[1] < 13){
         Serial.println("flame deetect near");
         arlindo.FanOn();
+        return 2;
     }
     else
       {
         Serial.println(" FLAME NOT DETEC");
         arlindo.FanOff();
+        return 0;
       }
 }
 
