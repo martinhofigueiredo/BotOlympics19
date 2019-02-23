@@ -13,9 +13,12 @@
 //#define TEST
 
 
+#define TrashHole 67
+
 int incomingByte;
 
 BotFCTUC arlindo = BotFCTUC();
+
 uint16_t RGBC[3];
 int16_t Distance[3];
 int16_t IR;
@@ -48,28 +51,31 @@ void navigate(){
 
   }
 
-  #ifdef TEST
-  Serial.print("Esquerda =");
-  Serial.println(Distance[0]);
-  Serial.print("Center =");
-  Serial.println(Distance[1]);
-  Serial.print("Direita =");
-  Serial.println(Distance[2]);
-  //Input = (double)Distance[2];
-  //myPID.Compute();
-  //Serial.print("Output PID = ");
-  //Serial.println(Output);
-  Serial.print("Motor Esquerda = ");
-  Serial.println(Motor[0]);
-  Serial.print("Motor Direita = ");
-  Serial.println(Motor[1]);
+void flame_test()
+{
+  arlindo.SetIRScale(SCALE_1);
 
-  Serial.write(27);       // ESC command
-  Serial.print("[2J");    // clear screen command
-  Serial.write(27);
-  Serial.print("[H");
-  #endif
-  //arlindo.Move(Motor[0],Motor[1]);
+  IRSensorScale_t scale = arlindo.GetIRScale();
+
+
+  IR = arlindo.GetIR();
+  Serial.print("IR = ");
+  Serial.println(IR);
+
+    if(IR > TrashHole)
+      {
+        Serial.println(" FLAME DETEC");
+        arlindo.FanOn();
+      }
+    else
+      {
+        Serial.println(" FLAME NOT DETEC")
+      }
+}
+
+void setup() {
+  arlindo.begin();
+  Serial.begin(9600);
 }
 
 void setup(){
@@ -116,5 +122,26 @@ void setup() {
 void loop() {
   navigate();
   linetest();
+  flametest();
+  #ifdef TEST
+  Serial.print("Esquerda =");
+  Serial.println(Distance[0]);
+  Serial.print("Center =");
+  Serial.println(Distance[1]);
+  Serial.print("Direita =");
+  Serial.println(Distance[2]);
+  //Input = (double)Distance[2];
+  //myPID.Compute();
+  //Serial.print("Output PID = ");
+  //Serial.println(Output);
+  Serial.print("Motor Esquerda = ");
+  Serial.println(Motor[0]);
+  Serial.print("Motor Direita = ");
+  Serial.println(Motor[1]);
 
+  Serial.write(27);       // ESC command
+  Serial.print("[2J");    // clear screen command
+  Serial.write(27);
+  Serial.print("[H");
+  #endif
 }
