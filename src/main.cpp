@@ -12,10 +12,10 @@ void linetest(){
   arlindo.GetColor(RGBC);
   Serial.print("R = ");
   Serial.println(RGBC[0]);
-  Serial.print("R = ");
-  Serial.println(RGBC[0]);
-  Serial.print("R = ");
-  Serial.println(RGBC[0]);
+  Serial.print("G = ");
+  Serial.println(RGBC[1]);
+  Serial.print("B = ");
+  Serial.println(RGBC[2]);
 }
 
 void setup() {
