@@ -9,7 +9,7 @@
 #define MAXRANGE 100;
 #define K 1.5
 
-#define TrashHole 67
+#define TrashHole 60
 
 int incomingByte;
 
@@ -46,29 +46,34 @@ void navigate(){
     //Serial.println(DEFAULTSPEED-kp);
   	//arlindo.Move(DEFAULTSPEED-kp,DEFAULTSPEED+kp);
 
-
-  }
 void flame_test()
 {
-  arlindo.SetIRScale(SCALE_1);
-
+  arlindo.SetIRScale(SCALE_7);
+  arlindo.GetSonars(Distance);
   IRSensorScale_t scale = arlindo.GetIRScale();
 
 
   IR = arlindo.GetIR();
   Serial.print("IR = ");
   Serial.println(IR);
-
-    if(IR > TrashHole)
+  Serial.print("dist = ");
+  Serial.println(Distance[1]);
+    if(IR > TrashHole && Distance[1] > 14)
       {
-        Serial.println(" FLAME DETEC");
-        arlindo.FanOn();
+        Serial.println(" FLAME DETEC FAR");
+        //arlindo.FanOn();
       }
+      if(IR > TrashHole && Distance[1] < 13){
+        Serial.println("flame deetect near");
+        arlindo.FanOn();
+    }
     else
       {
-        Serial.println(" FLAME NOT DETEC")
+        Serial.println(" FLAME NOT DETEC");
+        arlindo.FanOff();
       }
 }
+
 
 bool linetest(){
   arlindo.GetColor(RGBC);
@@ -93,13 +98,14 @@ bool linetest(){
 
 
 void setup(){
-  Serial.begin(57600);
+  Serial.begin(9600);
   arlindo.begin();
   while(!arlindo.ButtonPressed()){}
 }
 
 
 void loop() {
+  
   navigate();
   #ifdef TEST
   Serial.print("Esquerda =");
