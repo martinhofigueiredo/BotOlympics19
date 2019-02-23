@@ -8,8 +8,7 @@ int16_t Distance[3];
 int16_t IR;
 
 void linetest(){
-  int i = 0;
-  int r, g, b;
+  
 }
 
 void setup() {
