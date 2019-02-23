@@ -1,7 +1,6 @@
 #include <Arduino.h>
 #include <BotFCTUC.h>
-#include <PID_v1.h>
-#include <PID_Autotune_V0.h>
+
 
 //#define TEST
 #define THRESHOLD 20
@@ -19,11 +18,8 @@ uint16_t RGBC[3];
 int16_t Distance[3];
 int16_t IR;
 int16_t Motor[2];
-/*double Setpoint, Input, Output, consKp=101, consKi=0.003, consKd=0.2;
-PID myPID(&Input, &Output, &Setpoint, consKp, consKi, consKd, DIRECT);
-SetOutputLimits(0,THRESHOLD)*/
 
-
+//Wallfollowing algorithm
 void navigate(){
   arlindo.GetSonars(Distance);
   for(int i = 0; i < 3;i++){
@@ -45,9 +41,10 @@ void navigate(){
   	arlindo.Move(DEFAULTSPEED,DEFAULTSPEED+ke);
     //Serial.println(DEFAULTSPEED-kp);
   	//arlindo.Move(DEFAULTSPEED-kp,DEFAULTSPEED+kp);
+}}
 
-int flame_test()
-{
+//Returns 2 if flame far, 1 if close, 0 if no flame
+int flametest(){
   arlindo.SetIRScale(SCALE_7);
   arlindo.GetSonars(Distance);
   IRSensorScale_t scale = arlindo.GetIRScale();
@@ -77,7 +74,7 @@ int flame_test()
       }
 }
 
-
+//true if passes white line
 bool linetest(){
   arlindo.GetColor(RGBC);
   #ifdef TEST
@@ -108,8 +105,14 @@ void setup(){
 
 
 void loop() {
-  
-  navigate();
+
+  if(linetest()){
+    while(flametest() == 0){
+      arlindo.Move(-20,20);
+    }}
+  else{
+    navigate();
+  }
   #ifdef TEST
   Serial.print("Esquerda =");
   Serial.println(Distance[0]);
