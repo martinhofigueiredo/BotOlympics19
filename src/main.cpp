@@ -5,7 +5,7 @@
 
 //#define TEST
 #define THRESHOLD 10
-#define DEFAULTSPEED 60
+#define DEFAULTSPEED 85
 #define MAXRANGE 100;
 #define K 1.5
 
@@ -27,16 +27,16 @@ void navigate(){
     }
   }
 
-  if(Distance[1] < 6){
-    arlindo.Move(50,-50);
+  if(Distance[1] < 11){
+    arlindo.Move(85,-85);
 
     }
   else{
     int kp=(Distance[2]-THRESHOLD)*5;
-    Serial.print("Left Motor Speed =");
+    /*Serial.print("Left Motor Speed =");
     Serial.println(DEFAULTSPEED+kp);
     Serial.print("Right Motor Speed =");
-    Serial.println(DEFAULTSPEED-kp);
+    Serial.println(DEFAULTSPEED-kp);*/
   	arlindo.Move(DEFAULTSPEED-kp,DEFAULTSPEED+kp);
 
   }
