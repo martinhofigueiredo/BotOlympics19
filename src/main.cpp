@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <BotFCTUC.h>
 
-#define TrashHole 67
+#define TrashHole 60
 
 int incomingByte;
 BotFCTUC arlindo = BotFCTUC();
@@ -10,42 +10,35 @@ uint16_t RGBC[3];
 int16_t Distance[3];
 int16_t IR;
 
-<<<<<<< HEAD
 
-=======
-<<<<<<< HEAD
-=======
->>>>>>> ded48535698ad2d8cd369958fab13f5f6e49cb65
 void flame_test()
 {
-  arlindo.SetIRScale(SCALE_1);
-
+  arlindo.SetIRScale(SCALE_7);
+  arlindo.GetSonars(Distance);
   IRSensorScale_t scale = arlindo.GetIRScale();
 
 
   IR = arlindo.GetIR();
   Serial.print("IR = ");
   Serial.println(IR);
-
-    if(IR > TrashHole)
+  Serial.print("dist = ");
+  Serial.println(Distance[1]);
+    if(IR > TrashHole && Distance[1] > 14)
       {
-        Serial.println(" FLAME DETEC");
-        arlindo.FanOn();
+        Serial.println(" FLAME DETEC FAR");
+        //arlindo.FanOn();
       }
+      if(IR > TrashHole && Distance[1] < 13){
+        Serial.println("flame deetect near");
+        arlindo.FanOn();
+    }
     else
       {
-<<<<<<< HEAD
         Serial.println(" FLAME NOT DETEC");
+        arlindo.FanOff();
       }
 }
 
-=======
-        Serial.println(" FLAME NOT DETEC")
-      }
-}
-
->>>>>>> 992bd248a5e37f0e0605dc9ac428ed901bc73afd
->>>>>>> ded48535698ad2d8cd369958fab13f5f6e49cb65
 void setup() {
   arlindo.begin();
   Serial.begin(9600);
@@ -53,5 +46,4 @@ void setup() {
 
 void loop(){
     flame_test();
-    Serial.print("test");
 }
