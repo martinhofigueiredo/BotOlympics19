@@ -174,6 +174,7 @@ void loop()
     {
       while(n_linhas != 0){
         navigate(LEFT);
+        if (entroudivisao) n_linhas--;
       }
     }
   }
