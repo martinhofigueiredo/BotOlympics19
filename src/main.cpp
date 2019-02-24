@@ -31,7 +31,7 @@ int16_t Motor[2];
 int n_linhas = 0;
 int state = 0;
 unsigned long currentmillis;
-
+bool oldline=0, currentline=0, entroudivisao=0;
 
 
 //Wallfollowing algorithm
@@ -75,7 +75,7 @@ bool flametest(){
 
 //true if passes white line
 bool linetest(){
-  if(RGBC[0] < COLORLIMIT && RGBC[1] < COLORLIMIT && RGBC[2] < COLORLIMIT){
+  if(RGBC[0] < COLORLIMIT && RGBC[1] < COLORLIMIT && RGBC[2] < COLORLIMIT && RGBC[3]){
     arlindo.GreenLEDOff();
     return 0;
   }
@@ -83,6 +83,18 @@ bool linetest(){
     n_linhas++;
     arlindo.GreenLEDOn();
     return 1;
+  }
+}
+
+bool FE_line()
+{
+  oldline=currentline;
+  currentline=linetest();
+  if (oldline==1 && currentline==0){
+    return 1;
+  }
+  else{
+    return 0;
   }
 }
 
@@ -99,12 +111,13 @@ void loop()
   arlindo.GetColor(RGBC);
   IR = arlindo.GetIR();
   arlindo.GetSonars(Distance);
+  entroudivisao=FE_line();
 
   switch(state){
     case 0: //A mexer
     {
       navigate();
-      if(linetest() && !(n_linhas%2) && n_linhas > 1)
+      if(entroudivisao && !(n_linhas%2) && (n_linhas > 1))
       {
         state = 1;
       }
@@ -121,9 +134,9 @@ void loop()
     }
     case 2: //RODA A PROCURA DA CHAMA
     {
-      while(millis()- currentmillis < 3500 && millis() - currentmillis > 1000 && n_linhas > 1)
+      while(((millis()- currentmillis) < 3500) && ((millis() - currentmillis) > 1000) && (n_linhas > 1))
       {
-          arlindo.Move(DEFAULTSPEED*0.8,-DEFAULTSPEED*0.8);
+          arlindo.Move(DEFAULTSPEED*0.7,-DEFAULTSPEED*0.7);
           if(flametest() == 1){
             state = 3;
             break;
@@ -144,10 +157,15 @@ void loop()
     }
     case 4:
     {
+      currentmillis = millis();
+      while((millis()- currentmillis) < 1000 ){
       arlindo.FanOn();
-      break;
     }
+      state=0;
+      break;
+
   }
+}
   #ifdef TEST
   //Serial.print("Esquerda =");
   //Serial.println(Distance[0]);

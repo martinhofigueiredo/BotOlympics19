@@ -10,7 +10,7 @@ int16_t IR;
 void setup(){
   Serial.begin(9600);
   arlindo.begin();
-  arlindo.SetIRScale(SCALE_1);
+  arlindo.SetIRScale(SCALE_8);
 }
 
 void loop()
