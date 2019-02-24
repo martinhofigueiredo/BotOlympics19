@@ -13,6 +13,8 @@
 #define LEFTLIMIT 20
 #define COMPENSATER 37
 #define TEST
+#define RIGHT true
+#define LEFT false
 
 //FLAME
 #define IRLIMIT 60
@@ -109,7 +111,7 @@ void loop()
   switch(state){
     case 0: //A mexer
     {
-      navigate();
+      navigate(RIGHT);
       if(linetest() && !(n_linhas%2) && n_linhas > 1)
       {
         state = 1;
@@ -152,6 +154,12 @@ void loop()
     {
       arlindo.FanOn();
       break;
+    }
+    case 5:
+    {
+      while(n_linhas != 0){
+        navigate(LEFT);
+      }
     }
   }
   #ifdef TEST
