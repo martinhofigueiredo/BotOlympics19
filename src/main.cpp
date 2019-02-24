@@ -12,7 +12,7 @@
 #define RIGHTLIMIT 20
 #define LEFTLIMIT 20
 #define COMPENSATER 37
-#define TEST
+//#define TEST
 #define RIGHT true
 #define LEFT false
 
@@ -54,12 +54,12 @@ void navigate(bool dir){
   }
   }
   else{
-  }
+
   if(Distance[1] < FRONTLIMIT){
     arlindo.Move(-(HARDTURN),HARDTURN);
   }
   else {
-    float ke = (Distance[1]-LEFTLIMIT)*(COMPENSATER/10);
+    float ke = (Distance[0]-LEFTLIMIT)*(COMPENSATER/10);
   	arlindo.Move(DEFAULTSPEED+ke,DEFAULTSPEED);
   }
   }
@@ -94,8 +94,7 @@ bool linetest(){
   }
 }
 
-bool FE_line()
-{
+bool FE_line(){
   oldline=currentline;
   currentline=linetest();
   if (oldline==1 && currentline==0){
@@ -107,7 +106,9 @@ bool FE_line()
 }
 
 void setup(){
+  #ifdef TEST
   Serial.begin(57600);
+  #endif
   arlindo.begin();
   arlindo.SetIRScale(SCALE_8);
   while(!arlindo.ButtonPressed()){}
@@ -124,13 +125,8 @@ void loop()
   switch(state){
     case 0: //A mexer
     {
-<<<<<<< HEAD
-      navigate();
-      if(entroudivisao && !(n_linhas%2) && (n_linhas > 1))
-=======
       navigate(RIGHT);
-      if(linetest() && !(n_linhas%2) && n_linhas > 1)
->>>>>>> 567f479443448dc777968a34566519389c2ed3ee
+      if(entroudivisao && !(n_linhas%2) && (n_linhas > 1))
       {
         state = 1;
       }
@@ -174,18 +170,12 @@ void loop()
       while((millis()- currentmillis) < 1000 ){
       arlindo.FanOn();
     }
-<<<<<<< HEAD
-      state=0;
-      break;
-
-=======
     case 5:
     {
       while(n_linhas != 0){
         navigate(LEFT);
       }
     }
->>>>>>> 567f479443448dc777968a34566519389c2ed3ee
   }
 }
   #ifdef TEST
