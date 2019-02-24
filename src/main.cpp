@@ -10,8 +10,11 @@
 #define HARDTURN 97
 #define FRONTLIMIT 14
 #define RIGHTLIMIT 20
+#define LEFTLIMIT 20
 #define COMPENSATER 37
 #define TEST
+#define RIGHT true
+#define LEFT false
 
 //FLAME
 #define IRLIMIT 60
@@ -35,26 +38,31 @@ bool oldline=0, currentline=0, entroudivisao=0;
 
 
 //Wallfollowing algorithm
-void navigate(){
+void navigate(bool dir){
   for(int i = 0; i < 3;i++){
     if(Distance[i]==0){
       Distance[i] = 50;
     }
   }
-//Serial.println(Distance[2]);
+  if(dir){
   if(Distance[1] < FRONTLIMIT){
     arlindo.Move(HARDTURN,-(HARDTURN));
-    }
- else {
+  }
+  else {
     float ke = (Distance[2]-RIGHTLIMIT)*(COMPENSATER/10);
-    /*Serial.print("Left Motor Speed =");
-    Serial.println(DEFAULTSPEED+kp);
-    Serial.print("Right Motor Speed =");
-    Serial.println(DEFAULTSPEED-kp);*/
   	arlindo.Move(DEFAULTSPEED,DEFAULTSPEED+ke);
-    //Serial.println(DEFAULTSPEED-kp);
-  	//arlindo.Move(DEFAULTSPEED-kp,DEFAULTSPEED+kp);
-}
+  }
+  }
+  else{
+  }
+  if(Distance[1] < FRONTLIMIT){
+    arlindo.Move(-(HARDTURN),HARDTURN);
+  }
+  else {
+    float ke = (Distance[1]-LEFTLIMIT)*(COMPENSATER/10);
+  	arlindo.Move(DEFAULTSPEED+ke,DEFAULTSPEED);
+  }
+  }
 }
 
 //Returns 2 if flame far, 1 if close, 0 if no flame
@@ -116,8 +124,13 @@ void loop()
   switch(state){
     case 0: //A mexer
     {
+<<<<<<< HEAD
       navigate();
       if(entroudivisao && !(n_linhas%2) && (n_linhas > 1))
+=======
+      navigate(RIGHT);
+      if(linetest() && !(n_linhas%2) && n_linhas > 1)
+>>>>>>> 567f479443448dc777968a34566519389c2ed3ee
       {
         state = 1;
       }
@@ -161,9 +174,18 @@ void loop()
       while((millis()- currentmillis) < 1000 ){
       arlindo.FanOn();
     }
+<<<<<<< HEAD
       state=0;
       break;
 
+=======
+    case 5:
+    {
+      while(n_linhas != 0){
+        navigate(LEFT);
+      }
+    }
+>>>>>>> 567f479443448dc777968a34566519389c2ed3ee
   }
 }
   #ifdef TEST
