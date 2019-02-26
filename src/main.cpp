@@ -4,20 +4,26 @@
 #define K 1.5
 
 //NAVIGATION
-#define DEFAULTSPEED 80
+#define DEFAULTSPEED 100
+
 #define SLOWSPEED DEFAULTSPEED/2
+
 #define MAXRANGE 100
+
 #define HARDTURN 97
-#define FRONTLIMIT 14
+
+#define FRONTLIMIT 10
 #define RIGHTLIMIT 20
 #define LEFTLIMIT 20
 #define COMPENSATER 37
-//#define TEST
+
+#define TEST
+
 #define RIGHT true
 #define LEFT false
 
 //FLAME
-#define IRLIMIT 60
+#define IRLIMIT 1
 
 //RGBC
 #define COLORLIMIT 100
@@ -106,11 +112,9 @@ bool FE_line(){
 }
 
 void setup(){
-  #ifdef TEST
-  Serial.begin(57600);
-  #endif
+  Serial.begin(9600);
   arlindo.begin();
-  arlindo.SetIRScale(SCALE_8);
+  arlindo.SetIRScale(SCALE_1);
   while(!arlindo.ButtonPressed()){}
 
 }
@@ -180,8 +184,8 @@ void loop()
   }
 }
   #ifdef TEST
-  //Serial.print("Esquerda =");
-  //Serial.println(Distance[0]);
+  Serial.print("Esquerda =");
+  Serial.println(Distance[0]);
   Serial.print("Center =");
   Serial.println(Distance[1]);
   Serial.print("Direita =");
@@ -190,14 +194,17 @@ void loop()
   Serial.println(IR);
   Serial.print("n_linhas = ");
   Serial.println(n_linhas);
-  Serial.print("!n_linhas%12 = ");
-  Serial.println(!(n_linhas%2));
   Serial.print("State = ");
   Serial.println(state);
+  Serial.print("entroudivisao = ");
+  Serial.println(entroudivisao);
+
+
   Serial.println();
-  /*Serial.write(27);       // ESC command
+
+  Serial.write(27);       // ESC command
   Serial.print("[2J");    // clear screen command
   Serial.write(27);
-  Serial.print("[H");*/
+  Serial.print("[H");
   #endif
 }
